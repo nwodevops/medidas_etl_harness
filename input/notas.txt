@@ -1,0 +1,88 @@
+# Sedes 
+# 1) SUSCRIPCION E IMPOSICION 
+tabs : Información general, Proceso Previo, Etapas de MA, MA gabinete, MA campo
+name : Mineria
+code : CMIN
+1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs
+
+name : Hidrocarburos
+code : CHID
+175cKnXiyyJ3v0swHTSyYOkeFXU8JJYmOboDZ0Td-ai4
+
+
+name : Electricidad
+code : CELE
+1T1FfvHi4oyYuN4TWF-kI-Lw-vUzwuARs7bDYQuMRTOw
+
+name : Industria
+code : CIND
+1YNwYtlSfaSvph2x50pNlFxnUZ6h3OdA3wARuWk8xGAA
+
+name : Pesca
+code : CPES
+1j4KMB9VPWjtSnoAh2SCKk4d9Eu1vyXMq6g_eHN73gA0
+
+name : Agricultura
+code : CAGR
+1fpta1uanalvGeK9RUPOrIs6tCLbav_JIY-lRJY0R4Wk
+
+name : Residuos Solidos
+code : CRES
+1fhbEI9FOCMElt2PRj9R4_-sPpXiTbJegLr9yqi30RWQ
+
+name : Consultoras Ambientales
+code : CCAM
+1CulMceKyedFE-Ba02DPlS5G8PBuyjBxhxrrVdIwuVN0
+
+name : Unidad funcional en educacion
+code : UFED
+13AschwZ207u8_yDOPrA0eKOgGTnesAwHP-NTk1rGizA
+
+name : Unidad funcional en vivienda
+code : UFSAVC
+1dWyKbazsQYC5cOcqfYnGhMOi-4gCU1Yh5XZ_GnfCsW8
+
+
+---
+# Sedes 
+# 2) SEGUIMIENTO DE MEDIDAS ADMINISTRATIVAS
+tabs : 1) Lista MA, 2) Ubicación,3) Info adicional, 4) Medidas Administrativas, 5) Acreditación, 6) Modificatorias
+name : Mineria
+code : CMIN
+1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc
+
+name : Hidrocarburos
+code : CHID
+1nL2wI3VILTNtep4YBzoAGw7WC7GQt1VdKMyG-xm36Bo
+
+name : Electricidad
+code : CELE
+15YJYcwVyWxRpOhNRh_Ll_HwIrdjj1wrvvsIEM0PdwrI
+
+name : Industria
+code : CIND
+1bNTnFyJZi-zahACpEip6zVRbJJp1Ai7qCGUWLTsEqc0
+
+name : Pesca
+code : CPES
+14t1kuc6nPxMCYhSG52MoO_sax_5_u-a3B5W1x6Kw2sg
+
+name : Agricultura
+code : CAGR
+1-seb4pl5nnF2UuiVY4rhDXe7BjW579paFRMaAGY_pJc
+
+name : Residuos Solidos
+code : CRES
+1ZqscT2yQ7gBXnTLjCSSEuXYk6vQUtOWRquuU-BFL3a8
+
+name : Consultoras Ambientales
+code : CCAM
+1PB7uTT1PyrCyD0B1D9Hn8yPXahw5Xz7amqcbhDqY4E8
+
+name : Unidad funcional en educacion
+code : UFED
+1AcTcQmo9AWVquGv719dDwGVysghgo4acp1FcffRO4jY
+
+name : Unidad funcional en vivienda
+code : UFSAVC
+153WfGqh3QB3mTuQJC9C1gVqu-kjnu4lVQLSZ4zcxiR4

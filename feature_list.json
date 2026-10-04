@@ -1,0 +1,31 @@
+{
+  "project": "medidas_etl",
+  "reglas": {
+    "una_feature_activa": "Como máximo un item con status in_progress",
+    "verificacion": "./init.sh debe terminar en HARNESS OK",
+    "trazabilidad": "Implementador escribe progress/impl_<id>.md"
+  },
+  "features": [
+    {
+      "id": "fase-1-entorno",
+      "title": "switch-env DW, esquema y log diario",
+      "status": "done",
+      "criterio": "CHECKPOINTS.md",
+      "doc": "docs/credenciales/local.txt"
+    },
+    {
+      "id": "fase-2-fuentes",
+      "title": "JSON, STG_MED_* y dos pasos de carga",
+      "status": "done",
+      "criterio": "CHECKPOINTS.md",
+      "doc": "input/fuentes_medidas.json"
+    },
+    {
+      "id": "fase-3-oracle",
+      "title": "DW_MED_* y verificar conteos",
+      "status": "done",
+      "criterio": "CHECKPOINTS.md",
+      "doc": "python/CONTRATO.md"
+    }
+  ]
+}

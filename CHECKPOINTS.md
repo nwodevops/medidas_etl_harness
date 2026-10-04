@@ -1,0 +1,32 @@
+# CHECKPOINTS — medidas
+
+Verificación: [`./init.sh`](init.sh) termina en **`HARNESS OK`**.
+
+## Global
+
+- [ ] `./init.sh` termina con **`HARNESS OK`**.
+- [ ] Bitácora en `logs/init_YYYYMMDD.log`.
+- [ ] Sin passwords reales en `project-config.json` versionado / `environments/`.
+- [ ] Log sin literales `${VAR}`.
+- [ ] Un solo `.py` en `logica/` (`medidas.py`).
+- [ ] Máximo **una** feature `in_progress`.
+- [ ] Esquema destino vía `DB_ORA_DW_SCHEMA`.
+
+## Fase 1 — Entorno
+
+- [ ] `switch-env.sh local` sobrepone `DB_ORA_DW_*` desde `docs/credenciales/local.txt`.
+- [ ] `DB_ORA_DW_SCHEMA` = `APP` en local y `REPOCSEP` en remote.
+- [ ] H2 levanta en puerto 9092.
+
+## Fase 2 — Fuentes
+
+- [ ] `input/fuentes_medidas.json` con 2 familias, 10 sedes y 20 libros.
+- [ ] `inputs.yaml` con 11 fuentes `type: sheets`.
+- [ ] `cargar_sheets.py suscripcion` y `cargar_sheets.py seguimiento` en ese orden.
+- [ ] Si una sede no trae la pestaña o la fila de códigos de `CMIN`, la corrida falla nombrando familia, sede y pestaña.
+
+## Fase 3 — Oracle
+
+- [ ] 11 tablas `<esquema>.DW_MED_*` con filas > 0.
+- [ ] `python/verificar.py`: conteo H2 = conteo Oracle en los 11 pares.
+- [ ] Espejo Windows: `init.bat`, `scripts/step_*.bat`, `workflows/wf_main_windows.hwf`.
