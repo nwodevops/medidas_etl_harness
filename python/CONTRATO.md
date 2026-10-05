@@ -4,9 +4,9 @@
 
 ```
 python/main.py
-  → io/leer_h2.py          (H2 STG_MED_* y STG_ME_* → DataFrames)
+  → io/leer_h2.py          (H2 STG_MED_* y STG_MED_OD_* → DataFrames)
   → logica/medidas.py      (un solo archivo)
-  → io/escribir_oracle.py  (<esquema>.DW_MED_* y DW_ME_*)
+  → io/escribir_oracle.py  (<esquema>.DW_MED_* y DW_MED_OD_*)
   → io/escribir_excel.py   (conteos en output/resultado.xlsx)
 ```
 
@@ -20,7 +20,7 @@ DataFrames con nombres = claves de `LECTURAS` en `python/io/leer_h2.py`.
 
 | Nombre | Descripción |
 |---|---|
-| `RESULTADO` | Conteos por tabla `DW_MED_*` y `DW_ME_*` |
+| `RESULTADO` | Conteos por tabla `DW_MED_*` y `DW_MED_OD_*` |
 | las 15 claves de `LECTURAS` | DataFrames que `main.py` escribe en Oracle |
 
 ## Reglas

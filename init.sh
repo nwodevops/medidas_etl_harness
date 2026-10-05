@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Harness — Sheets medidas → H2 STG_* → Oracle DW_MED_* y DW_ME_*.
+# Harness — Sheets medidas → H2 STG_* → Oracle DW_MED_* y DW_MED_OD_*.
 # Bitácora del día: logs/init_YYYYMMDD.log (no se borra).
 set -euo pipefail
 

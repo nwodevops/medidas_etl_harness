@@ -114,7 +114,7 @@ sources:
     sede_columns: true
     types: varchar
 
-  - stg_table: STG_ME_LISTA_MA
+  - stg_table: STG_MED_OD_LISTA_MA
     type: sheets
     familia: od
     spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
@@ -124,7 +124,7 @@ sources:
     sede_columns: true
     types: varchar
 
-  - stg_table: STG_ME_UBICACION
+  - stg_table: STG_MED_OD_UBICACION
     type: sheets
     familia: od
     spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
@@ -134,7 +134,7 @@ sources:
     sede_columns: true
     types: varchar
 
-  - stg_table: STG_ME_ACREDITACION
+  - stg_table: STG_MED_OD_ACREDITACION
     type: sheets
     familia: od
     spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
@@ -144,7 +144,7 @@ sources:
     sede_columns: true
     types: varchar
 
-  - stg_table: STG_ME_MODIFICATORIAS
+  - stg_table: STG_MED_OD_MODIFICATORIAS
     type: sheets
     familia: od
     spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"

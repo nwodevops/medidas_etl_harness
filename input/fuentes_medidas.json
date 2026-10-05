@@ -84,10 +84,10 @@
         {"code": "PICHANAKI", "name": "Pichanaki", "spreadsheet_key": "1qFIYxtmGx4rAZxEHqGvTJtLeaKRvA-LnqdYydvSutmM"}
       ],
       "tabs": [
-        {"worksheet": "1) Lista MA", "stg_table": "STG_ME_LISTA_MA", "oracle_table": "DW_ME_LISTA_MA", "header_row": 3, "data_start_row": 4},
-        {"worksheet": "2) Involuacrados - Ubicación", "stg_table": "STG_ME_UBICACION", "oracle_table": "DW_ME_UBICACION", "header_row": 2, "data_start_row": 3},
-        {"worksheet": "3) Acreditación", "stg_table": "STG_ME_ACREDITACION", "oracle_table": "DW_ME_ACREDITACION", "header_row": 2, "data_start_row": 3},
-        {"worksheet": "4)Modificatorias", "stg_table": "STG_ME_MODIFICATORIAS", "oracle_table": "DW_ME_MODIFICATORIAS", "header_row": 2, "data_start_row": 3}
+        {"worksheet": "1) Lista MA", "stg_table": "STG_MED_OD_LISTA_MA", "oracle_table": "DW_MED_OD_LISTA_MA", "header_row": 3, "data_start_row": 4},
+        {"worksheet": "2) Involuacrados - Ubicación", "stg_table": "STG_MED_OD_UBICACION", "oracle_table": "DW_MED_OD_UBICACION", "header_row": 2, "data_start_row": 3},
+        {"worksheet": "3) Acreditación", "stg_table": "STG_MED_OD_ACREDITACION", "oracle_table": "DW_MED_OD_ACREDITACION", "header_row": 2, "data_start_row": 3},
+        {"worksheet": "4)Modificatorias", "stg_table": "STG_MED_OD_MODIFICATORIAS", "oracle_table": "DW_MED_OD_MODIFICATORIAS", "header_row": 2, "data_start_row": 3}
       ]
     }
   ]

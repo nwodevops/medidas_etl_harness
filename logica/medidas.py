@@ -1,5 +1,5 @@
 # Medidas administrativas. Las hojas llegan ya cargadas en H2.
-# Sin conexiones: main.py escribe <esquema>.DW_MED_* y DW_ME_*.
+# Sin conexiones: main.py escribe <esquema>.DW_MED_* y DW_MED_OD_*.
 
 RESULTADO = pd.DataFrame(
     [
@@ -14,9 +14,9 @@ RESULTADO = pd.DataFrame(
         {"TABLA": "DW_MED_SEG_MEDIDAS", "FILAS": len(SEG_MEDIDAS)},
         {"TABLA": "DW_MED_SEG_ACREDITACION", "FILAS": len(SEG_ACREDITACION)},
         {"TABLA": "DW_MED_SEG_MODIFICATORIAS", "FILAS": len(SEG_MODIFICATORIAS)},
-        {"TABLA": "DW_ME_LISTA_MA", "FILAS": len(ME_LISTA_MA)},
-        {"TABLA": "DW_ME_UBICACION", "FILAS": len(ME_UBICACION)},
-        {"TABLA": "DW_ME_ACREDITACION", "FILAS": len(ME_ACREDITACION)},
-        {"TABLA": "DW_ME_MODIFICATORIAS", "FILAS": len(ME_MODIFICATORIAS)},
+        {"TABLA": "DW_MED_OD_LISTA_MA", "FILAS": len(ME_LISTA_MA)},
+        {"TABLA": "DW_MED_OD_UBICACION", "FILAS": len(ME_UBICACION)},
+        {"TABLA": "DW_MED_OD_ACREDITACION", "FILAS": len(ME_ACREDITACION)},
+        {"TABLA": "DW_MED_OD_MODIFICATORIAS", "FILAS": len(ME_MODIFICATORIAS)},
     ]
 )

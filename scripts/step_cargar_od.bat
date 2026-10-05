@@ -1,5 +1,5 @@
 @echo off
-REM Paso 5: Google Sheets familia od -> STG_ME_*.
+REM Paso 5: Google Sheets familia od -> STG_MED_OD_*.
 setlocal
 cd /d "%~dp0.."
 call "%~dp0_py.bat"

@@ -4,7 +4,7 @@
   1. SETUP   : project-config.json
   2. ENTRADA : io/leer_h2.py -> DataFrames (LECTURAS)
   3. LOGICA  : único .py en logica/
-  4. SALIDA  : Oracle DW_MED_* y DW_ME_* + Excel de conteos (output/resultado.xlsx)
+  4. SALIDA  : Oracle DW_MED_* y DW_MED_OD_* + Excel de conteos (output/resultado.xlsx)
 
 Contrato: python/CONTRATO.md
 """
@@ -103,7 +103,7 @@ def main() -> int:
     escribir = _load("escribir_excel", HERE / "io" / "escribir_excel.py")
     escribir.escribir_excel(salidas[SALIDA_DF], root)
 
-    print("Listo (H2 -> logica -> Oracle DW_MED_* y DW_ME_*).")
+    print("Listo (H2 -> logica -> Oracle DW_MED_* y DW_MED_OD_*).")
     return 0
 
 

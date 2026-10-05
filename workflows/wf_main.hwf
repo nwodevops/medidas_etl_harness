@@ -165,7 +165,7 @@ PY=python3
 "$PY" python/cargar_sheets.py od
 </script>
       <name>Cargar od</name>
-      <description>31 libros OD a STG_ME_*</description>
+      <description>31 libros OD a STG_MED_OD_*</description>
       <type>SHELL</type>
       <attributes/>
       <xloc>848</xloc>
@@ -194,7 +194,7 @@ PY=python3
 "$PY" python/main.py
 </script>
       <name>Run Python</name>
-      <description>python/main.py → logica/medidas.py → Oracle DW_MED_* y DW_ME_*</description>
+      <description>python/main.py → logica/medidas.py → Oracle DW_MED_* y DW_MED_OD_*</description>
       <type>SHELL</type>
       <attributes/>
       <xloc>688</xloc>

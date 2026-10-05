@@ -29,7 +29,7 @@
     },
     {
       "id": "fase-4-od",
-      "title": "31 OD a cuatro tablas DW_ME_*",
+      "title": "31 OD a cuatro tablas DW_MED_OD_*",
       "status": "done",
       "criterio": "CHECKPOINTS.md",
       "doc": "input/fuentes_medidas.json"

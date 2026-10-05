@@ -1,4 +1,4 @@
-"""SALIDA: DataFrames de logica/ → tablas <esquema>.DW_MED_* y DW_ME_* (reemplazo total).
+"""SALIDA: DataFrames de logica/ → tablas <esquema>.DW_MED_* y DW_MED_OD_* (reemplazo total).
 
 El esquema destino es DB_ORA_DW_SCHEMA (local: APP, remote: REPOCSEP). Si no
 esta definido cae al usuario de conexion en mayusculas.
@@ -28,10 +28,10 @@ TABLAS = {
     "SEG_MEDIDAS": "DW_MED_SEG_MEDIDAS",
     "SEG_ACREDITACION": "DW_MED_SEG_ACREDITACION",
     "SEG_MODIFICATORIAS": "DW_MED_SEG_MODIFICATORIAS",
-    "ME_LISTA_MA": "DW_ME_LISTA_MA",
-    "ME_UBICACION": "DW_ME_UBICACION",
-    "ME_ACREDITACION": "DW_ME_ACREDITACION",
-    "ME_MODIFICATORIAS": "DW_ME_MODIFICATORIAS",
+    "ME_LISTA_MA": "DW_MED_OD_LISTA_MA",
+    "ME_UBICACION": "DW_MED_OD_UBICACION",
+    "ME_ACREDITACION": "DW_MED_OD_ACREDITACION",
+    "ME_MODIFICATORIAS": "DW_MED_OD_MODIFICATORIAS",
 }
 
 
