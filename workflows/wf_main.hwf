@@ -2,7 +2,7 @@
 <workflow>
   <name>wf_main</name>
   <name_sync_with_filename>Y</name_sync_with_filename>
-  <description>Corrida: Reset H2 → create STG → suscripcion → seguimiento → Run Python</description>
+  <description>Corrida: Reset H2 → create STG → suscripcion → seguimiento → od → Run Python</description>
   <extended_description/>
   <created_user>-</created_user>
   <modified_user>-</modified_user>
@@ -162,10 +162,39 @@ PY=python3
 cd "${PROJECT_HOME}"
 PY=python3
 [ -x .venv/bin/python ] &amp;&amp; PY=.venv/bin/python
+"$PY" python/cargar_sheets.py od
+</script>
+      <name>Cargar od</name>
+      <description>31 libros OD a STG_ME_*</description>
+      <type>SHELL</type>
+      <attributes/>
+      <xloc>848</xloc>
+      <yloc>128</yloc>
+      <parallel>N</parallel>
+      <attributes_hac/>
+    </action>
+    <action>
+      <filename/>
+      <work_directory>${PROJECT_HOME}</work_directory>
+      <arguments/>
+      <arg_from_previous>N</arg_from_previous>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <exec_per_row>N</exec_per_row>
+      <set_append_logfile>N</set_append_logfile>
+      <insertScript>Y</insertScript>
+      <script>set -e
+cd "${PROJECT_HOME}"
+PY=python3
+[ -x .venv/bin/python ] &amp;&amp; PY=.venv/bin/python
 "$PY" python/main.py
 </script>
       <name>Run Python</name>
-      <description>python/main.py → logica/medidas.py → Oracle DW_MED_*</description>
+      <description>python/main.py → logica/medidas.py → Oracle DW_MED_* y DW_ME_*</description>
       <type>SHELL</type>
       <attributes/>
       <xloc>688</xloc>
@@ -215,6 +244,13 @@ PY=python3
     </hop>
     <hop>
       <from>Cargar seguimiento</from>
+      <to>Cargar od</to>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Cargar od</from>
       <to>Run Python</to>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
@@ -230,7 +266,7 @@ PY=python3
   </hops>
   <notepads>
     <notepad>
-      <note>Reset → create STG → cargar suscripcion → cargar seguimiento → Run Python.
+      <note>Reset → create STG → cargar suscripcion → cargar seguimiento → cargar od → Run Python.
 Hop no baja Google Sheets.</note>
       <markdown>N</markdown>
       <notetype>GENERAL</notetype>

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Harness — Sheets medidas → H2 STG_MED_* → Oracle DW_MED_*.
+# Harness — Sheets medidas → H2 STG_* → Oracle DW_MED_* y DW_ME_*.
 # Bitácora del día: logs/init_YYYYMMDD.log (no se borra).
 set -euo pipefail
 
@@ -79,6 +79,9 @@ run "$PY" python/cargar_sheets.py suscripcion || fail "cargar_sheets.py suscripc
 
 step "Cargar Sheets seguimiento"
 run "$PY" python/cargar_sheets.py seguimiento || fail "cargar_sheets.py seguimiento"
+
+step "Cargar Sheets od"
+run "$PY" python/cargar_sheets.py od || fail "cargar_sheets.py od"
 
 step "Python main"
 run "$PY" python/main.py || fail "python/main.py terminó con error"

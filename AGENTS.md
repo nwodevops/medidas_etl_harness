@@ -58,4 +58,4 @@ Esquema vía `DB_ORA_DW_SCHEMA`; credenciales Oracle solo en `docs/credenciales/
 
 ## Corrida
 
-20 libros en `input/fuentes_medidas.json`. Dos pasos: `cargar_sheets.py suscripcion` y `cargar_sheets.py seguimiento`. Destino: `<DB_ORA_DW_SCHEMA>.DW_MED_*`.
+51 libros en `input/fuentes_medidas.json` (20 de sedes y 31 de OD). Tres pasos: `cargar_sheets.py suscripcion`, `seguimiento` y `od`. Destino: `<DB_ORA_DW_SCHEMA>.DW_MED_*` y `DW_ME_*`.

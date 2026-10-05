@@ -1,7 +1,7 @@
-"""ENTRADA staging: Google Sheets de una familia → filas en STG_MED_*.
+"""ENTRADA staging: Google Sheets de una familia → filas en STG_*.
 
-El patrón de columnas es la sede CMIN. Otra sede con pestaña ausente o
-fila de códigos distinta aborta la corrida.
+El patrón de columnas es la sede ref_code de la familia. Otra sede con
+pestaña ausente o fila de códigos distinta aborta la corrida.
 """
 
 from __future__ import annotations
@@ -16,7 +16,6 @@ from introspect.h2_ddl import sanitize_ident
 
 _BATCH = 400
 _SEDE_COLS = ("SEDE_CODIGO", "SEDE_NOMBRE")
-_REF_SEDE = "CMIN"
 
 
 def _as_int(source: dict, key: str, default: int) -> int:
@@ -82,6 +81,7 @@ def _columnas_h2(cur, stg: str) -> list[str]:
 
 def _api(fn, *args, **kwargs):
     import gspread
+    import requests
 
     for intento in range(6):
         try:
@@ -89,8 +89,19 @@ def _api(fn, *args, **kwargs):
         except gspread.exceptions.APIError as exc:
             if "429" not in str(exc) or intento == 5:
                 raise
-            print(f"AVISO: cuota Sheets 429, espera 65s (intento {intento + 1})")
+            print(
+                f"AVISO: cuota Sheets 429, espera 65s (intento {intento + 1})",
+                flush=True,
+            )
             time.sleep(65)
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as exc:
+            if intento == 5:
+                raise
+            print(
+                f"AVISO: Sheets sin respuesta ({type(exc).__name__}), reintento {intento + 1}",
+                flush=True,
+            )
+            time.sleep(15)
     raise RuntimeError("cuota Sheets agotada")
 
 
@@ -105,12 +116,20 @@ def _catalogo(root: Path) -> dict:
     return familias
 
 
+def _ref_code(familia: dict) -> str:
+    code = str(familia.get("ref_code") or "").strip()
+    if not code:
+        raise ValueError(f"{familia.get('id')}: falta ref_code")
+    return code
+
+
 def _sedes(familia: dict) -> list[dict]:
+    ref = _ref_code(familia)
     sedes = list(familia.get("sedes") or [])
     codes = [str(s.get("code") or "") for s in sedes]
-    if _REF_SEDE not in codes:
-        raise ValueError(f"{familia.get('id')}: falta la sede patrón {_REF_SEDE}")
-    sedes.sort(key=lambda s: (str(s.get("code")) != _REF_SEDE, str(s.get("code"))))
+    if ref not in codes:
+        raise ValueError(f"{familia.get('id')}: falta la sede patrón {ref}")
+    sedes.sort(key=lambda s: (str(s.get("code")) != ref, str(s.get("code"))))
     return sedes
 
 
@@ -143,10 +162,12 @@ def cargar_sheets(root: Path, variables: dict[str, str] | None, familia_id: str)
     if not secret.is_file():
         raise FileNotFoundError(f"No se encuentra {secret}")
 
-    print(f"familia: {familia_id}")
+    print(f"familia: {familia_id}", flush=True)
     gc = gspread.service_account(filename=str(secret))
+    gc.set_timeout((30, 120))
     books: dict[str, object] = {}
     conteos: dict[str, int] = {}
+    ref = _ref_code(familia)
     sedes = _sedes(familia)
 
     conn = connect_h2(root, variables)
@@ -193,17 +214,24 @@ def cargar_sheets(root: Path, variables: dict[str, str] | None, familia_id: str)
                         )
                     names, indexes = _columnas(grid[header_row - 1], f"{familia_id} {code} {stg}")
                     if ref_names is None:
-                        if code != _REF_SEDE:
+                        if code != ref:
                             raise ValueError(
-                                f"{familia_id}: la primera sede debe ser {_REF_SEDE}, llegó {code}"
+                                f"{familia_id}: la primera sede debe ser {ref}, llegó {code}"
                             )
                         ref_names = names
                         ref_indexes = indexes
                     elif names != ref_names:
-                        raise ValueError(
-                            f"{familia_id} {code} '{worksheet}': fila de códigos {names} "
-                            f"distinta de {_REF_SEDE} {ref_names}"
+                        if _filas(grid, indexes, data_start, code, name):
+                            raise ValueError(
+                                f"{familia_id} {code} '{worksheet}': fila de códigos {names} "
+                                f"distinta de {ref} {ref_names}"
+                            )
+                        print(
+                            f"AVISO: {familia_id} {code} '{worksheet}': fila de códigos "
+                            f"distinta de {ref} y sin filas de datos; no se carga",
+                            flush=True,
                         )
+                        continue
                     todas.extend(_filas(grid, indexes, data_start, code, name))
 
                 assert ref_names is not None and ref_indexes is not None

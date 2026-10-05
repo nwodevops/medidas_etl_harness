@@ -2,6 +2,7 @@
   "familias": [
     {
       "id": "suscripcion",
+      "ref_code": "CMIN",
       "sedes": [
         {"code": "CMIN", "name": "Mineria", "spreadsheet_key": "1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs"},
         {"code": "CHID", "name": "Hidrocarburos", "spreadsheet_key": "175cKnXiyyJ3v0swHTSyYOkeFXU8JJYmOboDZ0Td-ai4"},
@@ -24,6 +25,7 @@
     },
     {
       "id": "seguimiento",
+      "ref_code": "CMIN",
       "sedes": [
         {"code": "CMIN", "name": "Mineria", "spreadsheet_key": "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"},
         {"code": "CHID", "name": "Hidrocarburos", "spreadsheet_key": "1nL2wI3VILTNtep4YBzoAGw7WC7GQt1VdKMyG-xm36Bo"},
@@ -43,6 +45,49 @@
         {"worksheet": "4) Medidas Administrativas", "stg_table": "STG_MED_SEG_MEDIDAS", "oracle_table": "DW_MED_SEG_MEDIDAS", "header_row": 3, "data_start_row": 4},
         {"worksheet": "5) Acreditación", "stg_table": "STG_MED_SEG_ACREDITACION", "oracle_table": "DW_MED_SEG_ACREDITACION", "header_row": 2, "data_start_row": 3},
         {"worksheet": "6) Modificatorias", "stg_table": "STG_MED_SEG_MODIFICATORIAS", "oracle_table": "DW_MED_SEG_MODIFICATORIAS", "header_row": 3, "data_start_row": 4}
+      ]
+    },
+    {
+      "id": "od",
+      "ref_code": "AMAZONAS",
+      "sedes": [
+        {"code": "AMAZONAS", "name": "Amazonas", "spreadsheet_key": "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"},
+        {"code": "ANCASH", "name": "Ancash", "spreadsheet_key": "1huVZW34EP2z2jywAI8JQ0CD9M5fCdz0x_BA9toGWKNg"},
+        {"code": "APURIMAC", "name": "Apurimac", "spreadsheet_key": "15hkZIRcAmroRdMRZ1gBolbLyvDTwXf6jlV_Ya52B7eI"},
+        {"code": "AREQUIPA", "name": "Arequipa", "spreadsheet_key": "1A5h3aVDEyYa-HWaBAJNNAU10gNN4wppi4dVR3LgjMXs"},
+        {"code": "AYACUCHO", "name": "Ayacucho", "spreadsheet_key": "1HoF5ldqAGxIvd99Og2AKPCmzIN20aqvt8GzF5Ffiblk"},
+        {"code": "CAJAMARCA", "name": "Cajamarca", "spreadsheet_key": "1I08UZWwZZfgBaddeRi1n-nna9ZIIrGyx2S9iniTRIsc"},
+        {"code": "CUSCO", "name": "Cusco", "spreadsheet_key": "1IViGomlPKMxwh3xEcgNT7xsEVkQbbenE0PG-qjr6jWw"},
+        {"code": "HUANCAVELICA", "name": "Huancavelica", "spreadsheet_key": "1JsfoLB3gHgXfElPmR3-jTw4H99qFLlz202ZBOpxKtws"},
+        {"code": "HUANUCO", "name": "Huanuco", "spreadsheet_key": "1KCPG1ekZe4qCDr_WYpR_aX-Lj90RUQlsEfgYoPQHqs0"},
+        {"code": "ICA", "name": "Ica", "spreadsheet_key": "176VBmDqlE9zTX_FGcnNqGQ1W2bgCbQEk7V8CWGQrGHY"},
+        {"code": "JUNIN", "name": "Junin", "spreadsheet_key": "1ZZnXmNPoQKOE3P82ObIGxsMx9qUpSrWsG_Vs24aour4"},
+        {"code": "LA_LIBERTAD", "name": "La Libertad", "spreadsheet_key": "1kb0i7z3YCOAv_F8Mn64TvmvI1HD2i9WpmgTITIfEpnI"},
+        {"code": "LAMBAYEQUE", "name": "Lambayeque", "spreadsheet_key": "1hMTJkPgZ1z7WI77IhPP87b09PIoYFNCP7mhcXaD6XPM"},
+        {"code": "LORETO", "name": "Loreto", "spreadsheet_key": "1oNDE2FURm5zxjRNUpa_78aDVonjrM-NoI_KtlvAZB3k"},
+        {"code": "MADRE_DE_DIOS", "name": "Madre de Dios", "spreadsheet_key": "1_THeFJuCZ2Dpyi5BFD3nrOIiPGTk6hUvUSEJYovMNFQ"},
+        {"code": "MOQUEGUA", "name": "Moquegua", "spreadsheet_key": "1Y0Y5oNeZqI1WgzXl3rvzTvRZuP0AFateuoGZZOjzhcE"},
+        {"code": "PASCO", "name": "Pasco", "spreadsheet_key": "1vMz9sfg9KygG-mKhZC-_PdGeK9i5qmmayybAO8IjmWo"},
+        {"code": "PIURA", "name": "Piura", "spreadsheet_key": "1hdCvBbRF5zArb1vzfnpVWfVdnuqyBxTgoxWZ6K5vsa4"},
+        {"code": "PUNO", "name": "Puno", "spreadsheet_key": "1Sw14XQK_BqOj6NDYPAub8RfgrigpEtpbOtIAl4UueJQ"},
+        {"code": "SAN_MARTIN", "name": "San Martin", "spreadsheet_key": "1IQEGcMsM5t9iWzd-q04ZpamkwUHrnM3xHPikwz8nRAE"},
+        {"code": "TACNA", "name": "Tacna", "spreadsheet_key": "1uA6lHY7hOLZG8-laRa8PiDlluxSLR8b2Gtsn597s_wE"},
+        {"code": "TUMBES", "name": "Tumbes", "spreadsheet_key": "1UAlzG0LyazzmbfuG6uXxj9jbYHtGAegxR9rITNxAg9g"},
+        {"code": "UCAYALI", "name": "Ucayali", "spreadsheet_key": "1aclo1CkESRIeaUc9_PsOpYICNyRilFDSWchKLykpEEQ"},
+        {"code": "VRAEM", "name": "Vraem", "spreadsheet_key": "1y-DkvoSK7ESjsKNedWed3F_b0TT7KucGezuKzr1kTxw"},
+        {"code": "CHIMBOTE", "name": "Chimbote", "spreadsheet_key": "1YXxz-s_zWUl7y-uTKNVa65C7PZ4L9hs-mn7NUa12-sY"},
+        {"code": "CORACORA", "name": "Coracora", "spreadsheet_key": "1Y8N1mswVxyjIq5gVaqUzVWawihr6_ud6pTHA-7VxGoo"},
+        {"code": "COTABAMBAS", "name": "Cotabambas", "spreadsheet_key": "1_cmZZenIOjoPBLlL8ML6zUGGufnlWmrvN9nFvA68bgU"},
+        {"code": "TALARA", "name": "Talara", "spreadsheet_key": "1t1Ebh6B47aAB7lG8_5lweHz279RoAHWF0Yr91sQtkoc"},
+        {"code": "ESPINAR", "name": "Espinar", "spreadsheet_key": "1tFwbdZlzhPGblBFfnE9o8HUww8gVzNEySjt6pT08fJk"},
+        {"code": "LA_CONVENCION", "name": "La Convencion", "spreadsheet_key": "1VDFZL6OzzF2ZpkPrSAkPR2GiJMB1DyR9mkXqV0ryWNA"},
+        {"code": "PICHANAKI", "name": "Pichanaki", "spreadsheet_key": "1qFIYxtmGx4rAZxEHqGvTJtLeaKRvA-LnqdYydvSutmM"}
+      ],
+      "tabs": [
+        {"worksheet": "1) Lista MA", "stg_table": "STG_ME_LISTA_MA", "oracle_table": "DW_ME_LISTA_MA", "header_row": 3, "data_start_row": 4},
+        {"worksheet": "2) Involuacrados - Ubicación", "stg_table": "STG_ME_UBICACION", "oracle_table": "DW_ME_UBICACION", "header_row": 2, "data_start_row": 3},
+        {"worksheet": "3) Acreditación", "stg_table": "STG_ME_ACREDITACION", "oracle_table": "DW_ME_ACREDITACION", "header_row": 2, "data_start_row": 3},
+        {"worksheet": "4)Modificatorias", "stg_table": "STG_ME_MODIFICATORIAS", "oracle_table": "DW_ME_MODIFICATORIAS", "header_row": 2, "data_start_row": 3}
       ]
     }
   ]

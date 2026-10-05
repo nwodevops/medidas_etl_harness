@@ -80,17 +80,32 @@ def introspect(source: dict, variables: dict[str, str], root: Path | None = None
         raise ValueError(f"{source.get('stg_table')}: header_row debe ser >= 1")
 
     def _api(fn, *args, **kwargs):
+        import requests
+
         for intento in range(6):
             try:
                 return fn(*args, **kwargs)
             except gspread.exceptions.APIError as exc:
                 if "429" not in str(exc) or intento == 5:
                     raise
-                print(f"AVISO: cuota Sheets 429, espera 65s (intento {intento + 1})")
+                print(
+                    f"AVISO: cuota Sheets 429, espera 65s (intento {intento + 1})",
+                    flush=True,
+                )
                 time.sleep(65)
+            except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as exc:
+                if intento == 5:
+                    raise
+                print(
+                    f"AVISO: Sheets sin respuesta ({type(exc).__name__}), "
+                    f"reintento {intento + 1}",
+                    flush=True,
+                )
+                time.sleep(15)
         raise RuntimeError("cuota Sheets agotada")
 
     gc = gspread.service_account(filename=str(secret))
+    gc.set_timeout((30, 120))
     book = _api(gc.open_by_key, key)
     sheet = _api(book.worksheet, str(worksheet))
     headers = _api(sheet.row_values, header_row)

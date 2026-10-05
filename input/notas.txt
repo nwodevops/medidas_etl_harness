@@ -86,3 +86,45 @@ code : UFED
 name : Unidad funcional en vivienda
 code : UFSAVC
 153WfGqh3QB3mTuQJC9C1gVqu-kjnu4lVQLSZ4zcxiR4
+
+
+--new familia
+El sheet de las 31 OD es Medidas administrativas
+Pestañas: Lista MA, Involucrados - Ubicación,  Acreditación, Modificatorias.
+
+
+
+
+| N° | Carpeta            | Nombre del Archivo                         | ID del Archivo                                 |
+| :- | :----------------- | :----------------------------------------- | :--------------------------------------------- |
+| 3  | 1\. Amazonas       | MEDIDAS ADMINISTRATIVAS OD AMAZONAS        | `1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg` |
+| 4  | 2\. Ancash         | BD MEDIDAS ADMINISTRATIVAS OD ANCASH       | `1huVZW34EP2z2jywAI8JQ0CD9M5fCdz0x_BA9toGWKNg` |
+| 5  | 3\. Apurimac       | MEDIDAS ADMINISTRATIVAS OD APURIMAC        | `15hkZIRcAmroRdMRZ1gBolbLyvDTwXf6jlV_Ya52B7eI` |
+| 6  | 4\. Arequipa       | MEDIDAS ADMINISTRATIVAS OD AREQUIPA        | `1A5h3aVDEyYa-HWaBAJNNAU10gNN4wppi4dVR3LgjMXs` |
+| 7  | 5\. Ayacucho       | MEDIDAS ADMINISTRATIVAS OD AYACUCHO        | `1HoF5ldqAGxIvd99Og2AKPCmzIN20aqvt8GzF5Ffiblk` |
+| 8  | 6\. Cajamarca      | MEDIDAS ADMINISTRATIVAS OD CAJAMARCA       | `1I08UZWwZZfgBaddeRi1n-nna9ZIIrGyx2S9iniTRIsc` |
+| 9  | 7\. Cusco          | MEDIDAS ADMINISTRATIVAS OD CUSCO           | `1IViGomlPKMxwh3xEcgNT7xsEVkQbbenE0PG-qjr6jWw` |
+| 10 | 8\. Huancavelica   | BD MEDIDAS ADMINISTRATIVAS OD HUANCAVELICA | `1JsfoLB3gHgXfElPmR3-jTw4H99qFLlz202ZBOpxKtws` |
+| 11 | 9\. Huánuco        | MEDIDAS ADMINISTRATIVAS OD HUÁNUCO         | `1KCPG1ekZe4qCDr_WYpR_aX-Lj90RUQlsEfgYoPQHqs0` |
+| 12 | 10\. Ica           | MEDIDAS ADMINISTRATIVAS OD ICA             | `176VBmDqlE9zTX_FGcnNqGQ1W2bgCbQEk7V8CWGQrGHY` |
+| 13 | 11\. Junin         | MEDIDAS ADMINISTRATIVAS OD JUNIN           | `1ZZnXmNPoQKOE3P82ObIGxsMx9qUpSrWsG_Vs24aour4` |
+| 14 | 12\. La Libertad   | BD MEDIDAS ADMINISTRATIVAS OD LA LIBERTAD  | `1kb0i7z3YCOAv_F8Mn64TvmvI1HD2i9WpmgTITIfEpnI` |
+| 15 | 13\. Lambayeque    | MEDIDAS ADMINISTRATIVAS OD LAMBAYEQUE      | `1hMTJkPgZ1z7WI77IhPP87b09PIoYFNCP7mhcXaD6XPM` |
+| 16 | 14\. Loreto        | MEDIDAS ADMINISTRATIVAS OD LORETO          | `1oNDE2FURm5zxjRNUpa_78aDVonjrM-NoI_KtlvAZB3k` |
+| 17 | 15\. Madre de Dios | MEDIDAS ADMINISTRATIVAS OD MADRE DE DIOS   | `1_THeFJuCZ2Dpyi5BFD3nrOIiPGTk6hUvUSEJYovMNFQ` |
+| 18 | 16\. Moquegua      | BD MEDIDAS ADMINISTRATIVAS OD MOQUEGUA     | `1Y0Y5oNeZqI1WgzXl3rvzTvRZuP0AFateuoGZZOjzhcE` |
+| 19 | 17\. Pasco         | BD MEDIDAS ADMINISTRATIVAS OD PASCO        | `1vMz9sfg9KygG-mKhZC-_PdGeK9i5qmmayybAO8IjmWo` |
+| 20 | 18\. Piura         | MEDIDAS ADMINISTRATIVAS OD PIURA           | `1hdCvBbRF5zArb1vzfnpVWfVdnuqyBxTgoxWZ6K5vsa4` |
+| 21 | 19\. Puno          | MEDIDAS ADMINISTRATIVAS OD PUNO            | `1Sw14XQK_BqOj6NDYPAub8RfgrigpEtpbOtIAl4UueJQ` |
+| 22 | 20\. San Martín    | MEDIDAS ADMINISTRATIVAS OD SAN MARTÍN      | `1IQEGcMsM5t9iWzd-q04ZpamkwUHrnM3xHPikwz8nRAE` |
+| 23 | 21\. Tacna         | MEDIDAS ADMINISTRATIVAS OD TACNA           | `1uA6lHY7hOLZG8-laRa8PiDlluxSLR8b2Gtsn597s_wE` |
+| 24 | 22\. Tumbes        | BD MEDIDAS ADMINISTRATIVAS OD TUMBES       | `1UAlzG0LyazzmbfuG6uXxj9jbYHtGAegxR9rITNxAg9g` |
+| 25 | 23\. Ucayali       | MEDIDAS ADMINISTRATIVAS OD UCAYALI         | `1aclo1CkESRIeaUc9_PsOpYICNyRilFDSWchKLykpEEQ` |
+| 26 | 24\. Vraem         | MEDIDAS ADMINISTRATIVAS OD VRAEM           | `1y-DkvoSK7ESjsKNedWed3F_b0TT7KucGezuKzr1kTxw` |
+| 27 | 25\. Chimbote      | MEDIDAS ADMINISTRATIVAS OD CHIMBOTE        | `1YXxz-s_zWUl7y-uTKNVa65C7PZ4L9hs-mn7NUa12-sY` |
+| 28 | 26\. Coracora      | MEDIDAS ADMINISTRATIVAS OD CORACORA        | `1Y8N1mswVxyjIq5gVaqUzVWawihr6_ud6pTHA-7VxGoo` |
+| 29 | 27\. Cotabambas    | MEDIDAS ADMINISTRATIVAS OD COTABAMBAS      | `1_cmZZenIOjoPBLlL8ML6zUGGufnlWmrvN9nFvA68bgU` |
+| 30 | 28\. Talara        | MEDIDAS ADMINISTRATIVAS OD TALARA          | `1t1Ebh6B47aAB7lG8_5lweHz279RoAHWF0Yr91sQtkoc` |
+| 31 | 29\. Espinar       | MEDIDAS ADMINISTRATIVAS OD ESPINAR         | `1tFwbdZlzhPGblBFfnE9o8HUww8gVzNEySjt6pT08fJk` |
+| 32 | 30\. La convención | MEDIDAS ADMINISTRATIVAS OD LA CONVENCIÓN   | `1VDFZL6OzzF2ZpkPrSAkPR2GiJMB1DyR9mkXqV0ryWNA` |
+| 33 | 31\. Pichanaki     | MEDIDAS ADMINISTRATIVAS OD PICHANAKI       | `1qFIYxtmGx4rAZxEHqGvTJtLeaKRvA-LnqdYydvSutmM` |

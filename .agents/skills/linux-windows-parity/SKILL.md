@@ -34,8 +34,9 @@ Hoy los pasos son:
 2. `scripts/step_create_stg.bat` → `python/create_stg.py`
 3. `scripts/step_cargar_suscripcion.bat` → `python/cargar_sheets.py suscripcion`
 4. `scripts/step_cargar_seguimiento.bat` → `python/cargar_sheets.py seguimiento`
-5. `scripts/step_main.bat` → `python/main.py`
-6. `scripts/step_verificar.bat` → `python/verificar.py`
+5. `scripts/step_cargar_od.bat` → `python/cargar_sheets.py od`
+6. `scripts/step_main.bat` → `python/main.py`
+7. `scripts/step_verificar.bat` → `python/verificar.py`
 
 Si `init.sh` gana un grep de conteo, `init.bat` gana el mismo grep. El log de ambos debe poder decir `HARNESS OK` con las mismas tablas. Los dos escriben en `logs/` (skill `etl-run-logs`). Un temporal que se borra al salir no cuenta.
 

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Carga una familia de Google Sheets → STG_MED_* en H2.
+"""Carga una familia de Google Sheets → STG_* en H2.
 
 Uso:
   python/cargar_sheets.py suscripcion
   python/cargar_sheets.py seguimiento
+  python/cargar_sheets.py od
 """
 
 from __future__ import annotations
@@ -31,7 +32,7 @@ def _load(name: str, path: Path):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Carga una familia de Sheets a H2")
-    parser.add_argument("familia", choices=("suscripcion", "seguimiento"))
+    parser.add_argument("familia", choices=("suscripcion", "seguimiento", "od"))
     args = parser.parse_args(argv)
 
     root = project_root()

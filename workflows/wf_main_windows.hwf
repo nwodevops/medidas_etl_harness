@@ -2,7 +2,7 @@
 <workflow>
    <name>wf_main_windows</name>
    <name_sync_with_filename>Y</name_sync_with_filename>
-   <description>Corrida medidas Windows: Reset H2 → create STG → suscripcion → seguimiento → Oracle</description>
+   <description>Corrida medidas Windows: Reset H2 → create STG → suscripcion → seguimiento → od → Oracle</description>
    <extended_description/>
    <created_user>-</created_user>
    <modified_user>-</modified_user>
@@ -127,8 +127,32 @@ if errorlevel 1 exit /b 1
          <attributes_hac/>
       </action>
       <action>
+         <name>Cargar od</name>
+         <description>step_cargar_od.bat</description>
+         <type>SHELL</type>
+         <attributes/>
+         <filename/>
+         <work_directory>${PROJECT_HOME}</work_directory>
+         <arg_from_previous>N</arg_from_previous>
+         <exec_per_row>N</exec_per_row>
+         <set_logfile>N</set_logfile>
+         <logfile/>
+         <logext/>
+         <add_date>N</add_date>
+         <add_time>N</add_time>
+         <insertScript>Y</insertScript>
+         <script>cd /d "%PROJECT_HOME%"
+call scripts\step_cargar_od.bat
+if errorlevel 1 exit /b 1
+</script>
+         <xloc>848</xloc>
+         <yloc>128</yloc>
+         <parallel>N</parallel>
+         <attributes_hac/>
+      </action>
+      <action>
          <name>Run Python</name>
-         <description>logica/medidas.py → Oracle DW_MED_* (Windows)</description>
+         <description>logica/medidas.py → Oracle DW_MED_* y DW_ME_* (Windows)</description>
          <type>SHELL</type>
          <attributes/>
          <filename/>
@@ -192,6 +216,13 @@ if errorlevel 1 exit /b 1
       </hop>
       <hop>
          <from>Cargar seguimiento</from>
+         <to>Cargar od</to>
+         <evaluation>Y</evaluation>
+         <unconditional>N</unconditional>
+         <enabled>Y</enabled>
+      </hop>
+      <hop>
+         <from>Cargar od</from>
          <to>Run Python</to>
          <evaluation>Y</evaluation>
          <unconditional>N</unconditional>
@@ -207,7 +238,7 @@ if errorlevel 1 exit /b 1
    </hops>
    <notepads>
       <notepad>
-         <note>Windows: step_reset_h2, step_create_stg, step_cargar_suscripcion, step_cargar_seguimiento, step_main.</note>
+         <note>Windows: step_reset_h2, step_create_stg, step_cargar_suscripcion, step_cargar_seguimiento, step_cargar_od, step_main.</note>
          <xloc>192</xloc>
          <yloc>320</yloc>
          <width>640</width>

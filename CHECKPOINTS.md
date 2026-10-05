@@ -30,3 +30,11 @@ Verificación: [`./init.sh`](init.sh) termina en **`HARNESS OK`**.
 - [ ] 11 tablas `<esquema>.DW_MED_*` con filas > 0.
 - [ ] `python/verificar.py`: conteo H2 = conteo Oracle en los 11 pares.
 - [ ] Espejo Windows: `init.bat`, `scripts/step_*.bat`, `workflows/wf_main_windows.hwf`.
+
+## Fase 4 — OD
+
+- [ ] Familia `od` en `input/fuentes_medidas.json`: 31 oficinas, `ref_code` `AMAZONAS`.
+- [ ] 4 fuentes `STG_ME_*` en `inputs.yaml` y 4 tablas `<esquema>.DW_ME_*` con filas > 0.
+- [ ] `cargar_sheets.py od` después de seguimiento. Si una OD no trae la pestaña, o trae otra fila de códigos con datos, la corrida falla nombrando familia, OD y pestaña. Una pestaña con códigos distintos y cero filas se omite con aviso.
+- [ ] `python/verificar.py`: conteo H2 = conteo Oracle en los 15 pares.
+- [ ] Espejo Windows: `scripts/step_cargar_od.bat` llamado desde `init.bat` y `wf_main_windows.hwf`.

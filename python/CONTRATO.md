@@ -4,13 +4,13 @@
 
 ```
 python/main.py
-  → io/leer_h2.py          (H2 STG_MED_* → DataFrames)
+  → io/leer_h2.py          (H2 STG_MED_* y STG_ME_* → DataFrames)
   → logica/medidas.py      (un solo archivo)
-  → io/escribir_oracle.py  (<esquema>.DW_MED_*)
+  → io/escribir_oracle.py  (<esquema>.DW_MED_* y DW_ME_*)
   → io/escribir_excel.py   (conteos en output/resultado.xlsx)
 ```
 
-La carga de filas no pasa por `main.py`. La hace `python/cargar_sheets.py suscripcion` y luego `python/cargar_sheets.py seguimiento`.
+La carga de filas no pasa por `main.py`. La hace `python/cargar_sheets.py suscripcion`, luego `seguimiento` y luego `od`.
 
 ## Entrada
 
@@ -20,8 +20,8 @@ DataFrames con nombres = claves de `LECTURAS` en `python/io/leer_h2.py`.
 
 | Nombre | Descripción |
 |---|---|
-| `RESULTADO` | Conteos por tabla `DW_MED_*` |
-| las 11 claves de `LECTURAS` | DataFrames que `main.py` escribe en Oracle |
+| `RESULTADO` | Conteos por tabla `DW_MED_*` y `DW_ME_*` |
+| las 15 claves de `LECTURAS` | DataFrames que `main.py` escribe en Oracle |
 
 ## Reglas
 

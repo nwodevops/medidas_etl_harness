@@ -65,28 +65,33 @@ if "%SCHEMA%"=="" (
 )
 echo ==^> Esquema destino Oracle: %SCHEMA%
 
-echo ==^> Paso 1/6: Reset H2 clean
-echo ==^> Paso 1/6: Reset H2 clean>> "%RUNLOG%"
+echo ==^> Paso 1/7: Reset H2 clean
+echo ==^> Paso 1/7: Reset H2 clean>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_reset_h2.bat"
 if errorlevel 1 goto :fail
 
-echo ==^> Paso 2/6: Python create STG
-echo ==^> Paso 2/6: Python create STG>> "%RUNLOG%"
+echo ==^> Paso 2/7: Python create STG
+echo ==^> Paso 2/7: Python create STG>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_create_stg.bat"
 if errorlevel 1 goto :fail
 
-echo ==^> Paso 3/6: Cargar Sheets suscripcion
-echo ==^> Paso 3/6: Cargar Sheets suscripcion>> "%RUNLOG%"
+echo ==^> Paso 3/7: Cargar Sheets suscripcion
+echo ==^> Paso 3/7: Cargar Sheets suscripcion>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_cargar_suscripcion.bat"
 if errorlevel 1 goto :fail
 
-echo ==^> Paso 4/6: Cargar Sheets seguimiento
-echo ==^> Paso 4/6: Cargar Sheets seguimiento>> "%RUNLOG%"
+echo ==^> Paso 4/7: Cargar Sheets seguimiento
+echo ==^> Paso 4/7: Cargar Sheets seguimiento>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_cargar_seguimiento.bat"
 if errorlevel 1 goto :fail
 
-echo ==^> Paso 5/6: Python main
-echo ==^> Paso 5/6: Python main>> "%RUNLOG%"
+echo ==^> Paso 5/7: Cargar Sheets od
+echo ==^> Paso 5/7: Cargar Sheets od>> "%RUNLOG%"
+call :runstep "%~dp0scripts\step_cargar_od.bat"
+if errorlevel 1 goto :fail
+
+echo ==^> Paso 6/7: Python main
+echo ==^> Paso 6/7: Python main>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_main.bat"
 if errorlevel 1 goto :fail
 
@@ -96,8 +101,8 @@ if not errorlevel 1 (
   goto :fail
 )
 
-echo ==^> Paso 6/6: Verificar conteos en H2 y Oracle
-echo ==^> Paso 6/6: Verificar conteos>> "%RUNLOG%"
+echo ==^> Paso 7/7: Verificar conteos en H2 y Oracle
+echo ==^> Paso 7/7: Verificar conteos>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_verificar.bat"
 if errorlevel 1 goto :fail
 

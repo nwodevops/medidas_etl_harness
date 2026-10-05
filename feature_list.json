@@ -26,6 +26,13 @@
       "status": "done",
       "criterio": "CHECKPOINTS.md",
       "doc": "python/CONTRATO.md"
+    },
+    {
+      "id": "fase-4-od",
+      "title": "31 OD a cuatro tablas DW_ME_*",
+      "status": "done",
+      "criterio": "CHECKPOINTS.md",
+      "doc": "input/fuentes_medidas.json"
     }
   ]
 }
