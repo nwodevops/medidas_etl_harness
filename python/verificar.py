@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cuenta filas en H2 y en Oracle. Falla si alguna está en 0 o no coinciden."""
+"""Cuenta filas en H2 y en MySQL. Falla si alguna está en 0 o no coinciden."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ PARES = (
     ("STG_MED_OD_MODIFICATORIAS", "DW_MED_OD_MODIFICATORIAS"),
 )
 
-_IDENT = re.compile(r"^[A-Z][A-Z0-9_]*$")
+_IDENT = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 
 
 def _ident(name: str) -> str:
@@ -47,17 +47,17 @@ def _contar_h2(cur, tabla: str) -> int:
     return int(cur.fetchone()[0])
 
 
-def _contar_oracle(cur, schema: str, tabla: str) -> int:
+def _contar_mysql(cur, schema: str, tabla: str) -> int:
     schema = _ident(schema)
     tabla = _ident(tabla)
-    cur.execute(f'SELECT COUNT(*) FROM {schema}."{tabla}"')
+    cur.execute(f"SELECT COUNT(*) FROM `{schema}`.`{tabla}`")
     return int(cur.fetchone()[0])
 
 
 def main() -> int:
     root = project_root()
     variables = load_vars(root)
-    cv = require_live_conn("oracle_dw", variables)
+    cv = require_live_conn("mysql_dw", variables)
     schema = _ident(cv["schema"])
 
     h2 = connect_h2(root, variables)
@@ -71,45 +71,46 @@ def main() -> int:
         h2.close()
 
     try:
-        import oracledb
+        import pymysql
     except ImportError as exc:
         raise SystemExit(
-            "Falta oracledb. Instala: pip install -r python/requirements.txt"
+            "Falta pymysql. Instala: pip install -r python/requirements.txt"
         ) from exc
 
-    port = int(cv["port"]) if str(cv["port"]).isdigit() else 1521
-    ora = oracledb.connect(
-        user=cv["username"],
-        password=cv["password"],
+    port = int(cv["port"]) if str(cv["port"]).isdigit() else 3306
+    my = pymysql.connect(
         host=cv["host"],
         port=port,
-        service_name=cv["database"],
+        user=cv["username"],
+        password=cv["password"],
+        database=schema,
+        charset="utf8mb4",
     )
     try:
-        ora_cur = ora.cursor()
+        my_cur = my.cursor()
         try:
-            conteos_ora = {
-                tabla: _contar_oracle(ora_cur, schema, tabla) for _, tabla in PARES
+            conteos_my = {
+                tabla: _contar_mysql(my_cur, schema, tabla) for _, tabla in PARES
             }
         finally:
-            ora_cur.close()
+            my_cur.close()
     finally:
-        ora.close()
+        my.close()
 
     fallos = 0
     for stg, tabla in PARES:
         n_h2 = conteos_h2[stg]
-        n_ora = conteos_ora[tabla]
-        print(f"VERIF {stg}={n_h2} {schema}.{tabla}={n_ora}")
-        if n_h2 <= 0 or n_ora <= 0 or n_h2 != n_ora:
+        n_my = conteos_my[tabla]
+        print(f"VERIF {stg}={n_h2} {schema}.{tabla}={n_my}")
+        if n_h2 <= 0 or n_my <= 0 or n_h2 != n_my:
             print(
-                f"FAIL: {stg}={n_h2} {schema}.{tabla}={n_ora}",
+                f"FAIL: {stg}={n_h2} {schema}.{tabla}={n_my}",
                 file=sys.stderr,
             )
             fallos += 1
     if fallos:
         return 1
-    print(f"VERIF OK {len(PARES)} pares, esquema {schema}")
+    print(f"VERIF OK {len(PARES)} pares, base {schema}")
     return 0
 
 

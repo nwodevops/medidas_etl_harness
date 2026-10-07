@@ -10,7 +10,7 @@ Verificación: [`./init.sh`](init.sh) termina en **`HARNESS OK`**.
 - [ ] Log sin literales `${VAR}`.
 - [ ] Un solo `.py` en `logica/` (`medidas.py`).
 - [ ] Máximo **una** feature `in_progress`.
-- [ ] Esquema destino vía `DB_ORA_DW_SCHEMA`.
+- [ ] Base destino MySQL vía `DB_MYSQL_DW_DATABASE` (`gappsdb` en local y en remote).
 
 ## Fase 1 — Entorno
 

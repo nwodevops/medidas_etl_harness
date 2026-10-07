@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Harness — Sheets medidas → H2 STG_* → Oracle DW_MED_* y DW_MED_OD_*.
+# Harness — Sheets medidas → H2 STG_* → MySQL DW_MED_* y DW_MED_OD_*.
 # Bitácora del día: logs/init_YYYYMMDD.log (no se borra).
 set -euo pipefail
 
@@ -58,12 +58,12 @@ command -v java >/dev/null 2>&1 || fail "java no está en PATH"
 if [ ! -x .venv/bin/python ]; then
   fail "venv ausente o roto. Desde el repo padre: ./scripts/nuevo_etl.sh lo crea. A mano: python3 -m venv .venv && .venv/bin/python -m pip install -r python/requirements.txt"
 fi
-"$PY" -c "import yaml, pandas, jaydebeapi, oracledb, gspread" >/dev/null 2>&1 \
+"$PY" -c "import yaml, pandas, jaydebeapi, pymysql, gspread" >/dev/null 2>&1 \
   || fail "el .venv no tiene dependencias (¿venv sin pip?). .venv/bin/python -m pip install -r python/requirements.txt"
-if [ ! -f project-config.json ]; then
-  step "Generando project-config.json (switch-env local)"
-  run ./switch-env.sh local || fail "switch-env local"
-fi
+step "switch-env local"
+run ./switch-env.sh local || fail "switch-env local"
+DBNAME="$("$PY" -c "import json; from pathlib import Path; d=json.loads(Path('project-config.json').read_text()); print(next(i['value'] for i in d['config']['variables'] if i['name']=='DB_MYSQL_DW_DATABASE'))")"
+log "base destino MySQL: ${DBNAME}"
 if [ ! -f client_secret.json ]; then
   fail "falta client_secret.json"
 fi
@@ -92,9 +92,9 @@ if grep -q '\${[A-Za-z0-9_]\+}' "$RUNLOG"; then
   fail "log contiene variables Hop sin resolver"
 fi
 
-step "Verificar conteos en H2 y Oracle"
-run "$PY" python/verificar.py || fail "conteos STG y Oracle no coinciden"
+step "Verificar conteos en H2 y MySQL"
+run "$PY" python/verificar.py || fail "conteos STG y MySQL no coinciden"
 
 echo "" | tee -a "$RUNLOG"
-echo -e "${GREEN}HARNESS OK${NC} — conteos leídos de H2 y Oracle. Bitácora: $DAILY" | tee -a "$RUNLOG"
+echo -e "${GREEN}HARNESS OK${NC} — conteos leídos de H2 y MySQL. Bitácora: $DAILY" | tee -a "$RUNLOG"
 exit 0

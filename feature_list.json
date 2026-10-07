@@ -33,6 +33,13 @@
       "status": "done",
       "criterio": "CHECKPOINTS.md",
       "doc": "input/fuentes_medidas.json"
+    },
+    {
+      "id": "fase-5-mysql",
+      "title": "Destino MySQL gappsdb",
+      "status": "done",
+      "criterio": "CHECKPOINTS.md",
+      "doc": "python/io/escribir_mysql.py"
     }
   ]
 }

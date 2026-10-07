@@ -17,7 +17,7 @@ Linux desarrolla. Windows ejecuta lo mismo contra otro Oracle. Un solo Python de
 | Rol | desarrollo | corrida |
 | Entorno | `local` | `remote` (default de `init.bat`) |
 | Oracle | `localhost:1524/BD_CURSOR` | `10.6.0.15:1532/dvoefacore` |
-| Esquema | `APP` (`DB_ORA_DW_SCHEMA`) | `REPOCSEP` |
+| MySQL | `localhost:3307` / `gappsdb` | `10.1.1.217:3306` / `gappsdb` |
 | Verificación | `./init.sh` → `HARNESS OK` | `init.bat remote` → `HARNESS OK` |
 | Hop | `~/apps/hop`, `workflows/wf_main.hwf` | `D:\Eder\hop`, `workflows/wf_main_windows.hwf` |
 | Config | `./switch-env.sh local` | `switch-env.ps1 remote` |
@@ -43,7 +43,7 @@ Si `init.sh` gana un grep de conteo, `init.bat` gana el mismo grep. El log de am
 ## Qué no se bifurca
 
 - `inputs.yaml`, `logica/*.py`, `python/io/`, `python/create_stg.py`, `python/main.py`.
-- Esquema destino: `DB_ORA_DW_SCHEMA` vía `config.require_live_conn`. Nunca un literal `APP` en el SQL.
+- Base destino: `DB_MYSQL_DW_DATABASE` vía `config.require_live_conn` (`mysql_dw`). Nunca un literal `gappsdb` en el SQL.
 - Intérprete Windows: `scripts/_py.bat` (`.venv\Scripts\python.exe`, si no `python`). En Windows no existe `python3` ni `.venv/bin/python`.
 
 ## Qué hace cada agente

@@ -1,11 +1,11 @@
-"""SALIDA: DataFrames de logica/ → tablas <esquema>.DW_MED_* y DW_MED_OD_* (reemplazo total).
+"""SALIDA: DataFrames de logica/ → tablas <base>.DW_MED_* y DW_MED_OD_* (reemplazo total).
 
-El esquema destino es DB_ORA_DW_SCHEMA (local: APP, remote: REPOCSEP). Si no
-esta definido cae al usuario de conexion en mayusculas.
+La base destino es DB_MYSQL_DW_DATABASE (gappsdb en local y en remote).
 """
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -13,8 +13,9 @@ import pandas as pd
 from config import require_live_conn
 from introspect.h2_ddl import sanitize_ident
 
-_VARCHAR = 4000
+_TEXT = 4000
 _BATCH = 400
+_IDENT = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 
 TABLAS = {
     "SUSC_INFO_GENERAL": "DW_MED_SUSC_INFO_GENERAL",
@@ -33,6 +34,12 @@ TABLAS = {
     "ME_ACREDITACION": "DW_MED_OD_ACREDITACION",
     "ME_MODIFICATORIAS": "DW_MED_OD_MODIFICATORIAS",
 }
+
+
+def _ident(name: str) -> str:
+    if not _IDENT.match(name):
+        raise ValueError(f"identificador no permitido: {name!r}")
+    return name
 
 
 def _columnas(df: pd.DataFrame) -> list[str]:
@@ -64,34 +71,36 @@ def _filas(df: pd.DataFrame) -> list[tuple]:
 
 
 def _tipos(rows: list[tuple], n_cols: int) -> list[str]:
-    clob = [False] * n_cols
+    largo = [False] * n_cols
     for rec in rows:
         for i, val in enumerate(rec):
-            if val is not None and len(val.encode("utf-8")) > _VARCHAR:
-                clob[i] = True
-    return ["CLOB" if flag else f"VARCHAR2({_VARCHAR})" for flag in clob]
+            if val is not None and len(val.encode("utf-8")) > _TEXT:
+                largo[i] = True
+    return ["LONGTEXT" if flag else "TEXT" for flag in largo]
 
 
-def _conectar(variables: dict[str, str]):
+def conectar(variables: dict[str, str]):
     try:
-        import oracledb
+        import pymysql
     except ImportError as exc:
         raise SystemExit(
-            "Falta oracledb. Instala: pip install -r python/requirements.txt"
+            "Falta pymysql. Instala: pip install -r python/requirements.txt"
         ) from exc
 
-    cv = require_live_conn("oracle_dw", variables)
-    port = int(cv["port"]) if str(cv["port"]).isdigit() else 1521
-    return oracledb.connect(
-        user=cv["username"],
-        password=cv["password"],
+    cv = require_live_conn("mysql_dw", variables)
+    port = int(cv["port"]) if str(cv["port"]).isdigit() else 3306
+    return pymysql.connect(
         host=cv["host"],
         port=port,
-        service_name=cv["database"],
+        user=cv["username"],
+        password=cv["password"],
+        database=cv["schema"],
+        charset="utf8mb4",
+        autocommit=False,
     )
 
 
-def escribir_oracle(
+def escribir_mysql(
     frames: dict[str, pd.DataFrame],
     root: Path,
     variables: dict[str, str],
@@ -99,10 +108,10 @@ def escribir_oracle(
     del root
     faltan = [k for k in TABLAS if k not in frames]
     if faltan:
-        raise ValueError(f"Faltan DataFrames para Oracle: {faltan}")
+        raise ValueError(f"Faltan DataFrames para MySQL: {faltan}")
 
-    schema = require_live_conn("oracle_dw", variables)["schema"]
-    conn = _conectar(variables)
+    schema = _ident(require_live_conn("mysql_dw", variables)["schema"])
+    conn = conectar(variables)
     conteos: dict[str, int] = {}
     try:
         cur = conn.cursor()
@@ -114,27 +123,22 @@ def escribir_oracle(
                 cols = _columnas(df)
                 rows = _filas(df)
                 tipos = _tipos(rows, len(cols))
-                qualified = f'{schema}."{tabla}"'
+                tabla = _ident(tabla)
+                qualified = f"`{schema}`.`{tabla}`"
+                cur.execute(f"DROP TABLE IF EXISTS {qualified}")
+                body = ",\n".join(f"    `{c}` {tipo}" for c, tipo in zip(cols, tipos))
                 cur.execute(
-                    """
-                    SELECT COUNT(*)
-                    FROM ALL_TABLES
-                    WHERE OWNER = :owner AND TABLE_NAME = :tname
-                    """,
-                    {"owner": schema, "tname": tabla},
+                    f"CREATE TABLE {qualified} (\n{body}\n) "
+                    "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
                 )
-                if int(cur.fetchone()[0]) > 0:
-                    cur.execute(f"DROP TABLE {qualified} PURGE")
-                body = ",\n".join(f'    "{c}" {tipo}' for c, tipo in zip(cols, tipos))
-                cur.execute(f"CREATE TABLE {qualified} (\n{body}\n)")
                 if rows:
-                    marks = ", ".join(f":{i + 1}" for i in range(len(cols)))
-                    quoted = ", ".join(f'"{c}"' for c in cols)
+                    marks = ", ".join(["%s"] * len(cols))
+                    quoted = ", ".join(f"`{c}`" for c in cols)
                     sql = f"INSERT INTO {qualified} ({quoted}) VALUES ({marks})"
                     for offset in range(0, len(rows), _BATCH):
                         cur.executemany(sql, rows[offset : offset + _BATCH])
                 conteos[tabla] = len(rows)
-                print(f"Oracle {schema}.{tabla}: {len(rows)} filas")
+                print(f"MySQL {schema}.{tabla}: {len(rows)} filas")
         finally:
             cur.close()
         conn.commit()

@@ -4,7 +4,7 @@
   1. SETUP   : project-config.json
   2. ENTRADA : io/leer_h2.py -> DataFrames (LECTURAS)
   3. LOGICA  : único .py en logica/
-  4. SALIDA  : Oracle DW_MED_* y DW_MED_OD_* + Excel de conteos (output/resultado.xlsx)
+  4. SALIDA  : MySQL DW_MED_* y DW_MED_OD_* + Excel de conteos (output/resultado.xlsx)
 
 Contrato: python/CONTRATO.md
 """
@@ -97,13 +97,13 @@ def main() -> int:
     if faltan:
         raise SystemExit(f"La lógica no dejó DataFrames {faltan}")
 
-    oracle = _load("escribir_oracle", HERE / "io" / "escribir_oracle.py")
-    oracle.escribir_oracle({k: ns[k] for k in claves_dw}, root, variables)
+    mysql = _load("escribir_mysql", HERE / "io" / "escribir_mysql.py")
+    mysql.escribir_mysql({k: ns[k] for k in claves_dw}, root, variables)
 
     escribir = _load("escribir_excel", HERE / "io" / "escribir_excel.py")
     escribir.escribir_excel(salidas[SALIDA_DF], root)
 
-    print("Listo (H2 -> logica -> Oracle DW_MED_* y DW_MED_OD_*).")
+    print("Listo (H2 -> logica -> MySQL DW_MED_* y DW_MED_OD_*).")
     return 0
 
 

@@ -152,7 +152,7 @@ if errorlevel 1 exit /b 1
       </action>
       <action>
          <name>Run Python</name>
-         <description>logica/medidas.py → Oracle DW_MED_* y DW_MED_OD_* (Windows)</description>
+         <description>logica/medidas.py → MySQL DW_MED_* y DW_MED_OD_* (Windows)</description>
          <type>SHELL</type>
          <attributes/>
          <filename/>

@@ -1,5 +1,5 @@
 # Medidas administrativas. Las hojas llegan ya cargadas en H2.
-# Sin conexiones: main.py escribe <esquema>.DW_MED_* y DW_MED_OD_*.
+# Sin conexiones: main.py escribe <base>.DW_MED_* y DW_MED_OD_* en MySQL.
 
 RESULTADO = pd.DataFrame(
     [

@@ -1,5 +1,5 @@
 @echo off
-REM Paso 5: python\main.py -> logica\medidas.py -> Oracle DW_MED_*.
+REM Paso 6: python\main.py -> logica\medidas.py -> MySQL DW_MED_*.
 setlocal
 cd /d "%~dp0.."
 call "%~dp0_py.bat"

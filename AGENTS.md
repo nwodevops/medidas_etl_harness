@@ -45,7 +45,7 @@ REM Hop GUI → workflows\wf_main_windows.hwf
 | `local` | `localhost:1524/BD_CURSOR` | `APP` |
 | `remote` | `10.6.0.15:1532/dvoefacore` | `REPOCSEP` |
 
-Esquema vía `DB_ORA_DW_SCHEMA`; credenciales Oracle solo en `docs/credenciales/*.txt` (gitignored), sobrepuestas por `switch-env.sh` / `switch-env.ps1`.
+Base destino vía `DB_MYSQL_DW_DATABASE` (`gappsdb`). Credenciales solo en `docs/credenciales/*.txt` (gitignored), sobrepuestas por `switch-env.sh` / `switch-env.ps1`.
 
 ## Reglas críticas
 
@@ -58,4 +58,4 @@ Esquema vía `DB_ORA_DW_SCHEMA`; credenciales Oracle solo en `docs/credenciales/
 
 ## Corrida
 
-51 libros en `input/fuentes_medidas.json` (20 de sedes y 31 de OD). Tres pasos: `cargar_sheets.py suscripcion`, `seguimiento` y `od`. Destino: `<DB_ORA_DW_SCHEMA>.DW_MED_*` y `DW_MED_OD_*`.
+51 libros en `input/fuentes_medidas.json` (20 de sedes y 31 de OD). Tres pasos: `cargar_sheets.py suscripcion`, `seguimiento` y `od`. Destino: `<DB_MYSQL_DW_DATABASE>.DW_MED_*` y `DW_MED_OD_*` en MySQL.

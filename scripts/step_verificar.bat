@@ -1,5 +1,5 @@
 @echo off
-REM Paso 6: cuenta filas en H2 y Oracle. Falla si no coinciden.
+REM Paso 7: cuenta filas en H2 y MySQL. Falla si no coinciden.
 setlocal
 cd /d "%~dp0.."
 call "%~dp0_py.bat"

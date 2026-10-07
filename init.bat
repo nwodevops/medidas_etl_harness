@@ -38,7 +38,7 @@ if not exist "%~dp0h2\lib\h2-2.4.240.jar" (
   echo FAIL: jar H2 no encontrado en h2\lib
   goto :fail
 )
-"%PY%" -c "import yaml,pandas,jaydebeapi,oracledb,gspread,openpyxl" >nul 2>&1
+"%PY%" -c "import yaml,pandas,jaydebeapi,pymysql,gspread,openpyxl" >nul 2>&1
 if errorlevel 1 (
   echo FAIL: %PY% no tiene las dependencias de python\requirements.txt
   goto :fail
@@ -47,23 +47,20 @@ if not exist "%~dp0client_secret.json" (
   echo FAIL: falta client_secret.json
   goto :fail
 )
-if not exist "%~dp0project-config.json" (
-  echo ==^> Generando project-config.json ^(switch-env %ENV%^)
-  powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0switch-env.ps1" %ENV%
-  if errorlevel 1 (
-    echo FAIL: switch-env %ENV%
-    goto :fail
-  )
+echo ==^> switch-env %ENV%
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0switch-env.ps1" %ENV%
+if errorlevel 1 (
+  echo FAIL: switch-env %ENV%
+  goto :fail
 )
 
 set "SCHEMA="
-for /f "usebackq delims=" %%v in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\get_var.ps1" "%~dp0project-config.json" DB_ORA_DW_SCHEMA`) do set "SCHEMA=%%v"
-if "%SCHEMA%"=="" for /f "usebackq delims=" %%u in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\get_var.ps1" "%~dp0project-config.json" DB_ORA_DW_USERNAME`) do set "SCHEMA=%%u"
+for /f "usebackq delims=" %%v in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\get_var.ps1" "%~dp0project-config.json" DB_MYSQL_DW_DATABASE`) do set "SCHEMA=%%v"
 if "%SCHEMA%"=="" (
-  echo FAIL: no pude resolver el esquema destino
+  echo FAIL: no pude resolver la base destino MySQL
   goto :fail
 )
-echo ==^> Esquema destino Oracle: %SCHEMA%
+echo ==^> Base destino MySQL: %SCHEMA%
 
 echo ==^> Paso 1/7: Reset H2 clean
 echo ==^> Paso 1/7: Reset H2 clean>> "%RUNLOG%"
@@ -101,15 +98,15 @@ if not errorlevel 1 (
   goto :fail
 )
 
-echo ==^> Paso 7/7: Verificar conteos en H2 y Oracle
+echo ==^> Paso 7/7: Verificar conteos en H2 y MySQL
 echo ==^> Paso 7/7: Verificar conteos>> "%RUNLOG%"
 call :runstep "%~dp0scripts\step_verificar.bat"
 if errorlevel 1 goto :fail
 
 echo.
-echo HARNESS OK -^> conteos leidos de H2 y Oracle. Bitacora: %LOGFILE%
+echo HARNESS OK -^> conteos leidos de H2 y MySQL. Bitacora: %LOGFILE%
 echo.>> "%RUNLOG%"
-echo HARNESS OK esquema %SCHEMA%>> "%RUNLOG%"
+echo HARNESS OK base %SCHEMA%>> "%RUNLOG%"
 call :savelog
 endlocal
 exit /b 0

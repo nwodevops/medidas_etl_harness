@@ -6,7 +6,7 @@
 python/main.py
   → io/leer_h2.py          (H2 STG_MED_* y STG_MED_OD_* → DataFrames)
   → logica/medidas.py      (un solo archivo)
-  → io/escribir_oracle.py  (<esquema>.DW_MED_* y DW_MED_OD_*)
+  → io/escribir_mysql.py   (<base>.DW_MED_* y DW_MED_OD_*)
   → io/escribir_excel.py   (conteos en output/resultado.xlsx)
 ```
 
@@ -28,4 +28,4 @@ DataFrames con nombres = claves de `LECTURAS` en `python/io/leer_h2.py`.
 - Un solo `.py` en `logica/`.
 - Sin conexiones ni drivers en `logica/` (I/O en `python/io/`).
 - `pandas` inyectado como `pd`.
-- Esquema Oracle: `DB_ORA_DW_SCHEMA`. Nunca un literal `APP` en el SQL.
+- Base MySQL: `DB_MYSQL_DW_DATABASE`. Nunca un literal `gappsdb` en el SQL.

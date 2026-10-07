@@ -194,7 +194,7 @@ PY=python3
 "$PY" python/main.py
 </script>
       <name>Run Python</name>
-      <description>python/main.py → logica/medidas.py → Oracle DW_MED_* y DW_MED_OD_*</description>
+      <description>python/main.py → logica/medidas.py → MySQL DW_MED_* y DW_MED_OD_*</description>
       <type>SHELL</type>
       <attributes/>
       <xloc>688</xloc>

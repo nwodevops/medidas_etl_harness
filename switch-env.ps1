@@ -6,7 +6,7 @@ param(
 
 # Cambia las variables activas de Hop copiando la plantilla elegida
 # (environments/<env>.json) a project-config.json -> config.variables y
-# sobreponiendo DB_ORA_DW_* desde docs/credenciales/<env>.txt (gitignored).
+# sobreponiendo DB_ORA_DW_* y DB_MYSQL_DW_* desde docs/credenciales/<env>.txt (gitignored).
 # Equivalente Windows de switch-env.sh.
 # Uso: .\switch-env.ps1 local   |   .\switch-env.ps1 remote
 
@@ -43,37 +43,59 @@ if (Test-Path -LiteralPath $projFile) {
     }
 }
 
-# --- Overlay DB_ORA_DW_* desde docs/credenciales/<env>.txt -------------------
-if (Test-Path -LiteralPath $credFile) {
+function Get-CredBlock {
+    param([string[]]$Lines)
     $wanted = @{}
-    foreach ($line in Get-Content -LiteralPath $credFile) {
+    foreach ($line in $Lines) {
         $line = $line.Trim()
         if ($line -eq '' -or $line.StartsWith('#')) { continue }
         $idx = $line.IndexOf(':')
         if ($idx -lt 1) { continue }
         $key = $line.Substring(0, $idx).Trim()
         $val = $line.Substring($idx + 1).Trim()
-        if ($key -in @('Host', 'Port', 'Service', 'User', 'Password')) { $wanted[$key] = $val }
+        if ($key -in @('Host', 'Port', 'Service', 'Database', 'User', 'Password')) {
+            $wanted[$key] = $val
+        }
     }
-    $missing = @('Host', 'Port', 'Service', 'User', 'Password') | Where-Object { -not $wanted.ContainsKey($_) }
-    if ($missing) {
-        throw "Faltan $($missing -join ', ') en $credFile"
+    return $wanted
+}
+
+# --- Overlay Oracle (antes de #Mysql) y MySQL (desde #Mysql) ----------------
+if (Test-Path -LiteralPath $credFile) {
+    $all = @(Get-Content -LiteralPath $credFile)
+    $split = 0
+    for ($i = 0; $i -lt $all.Count; $i++) {
+        if ($all[$i].Trim() -match '^#\s*mysql\b') { $split = $i; break }
     }
-    $dwHost = $wanted['Host']; $dwPort = $wanted['Port']; $dwService = $wanted['Service']
+    if ($split -lt 1) { throw "Falta el bloque #Mysql en $credFile" }
+    $ora = Get-CredBlock $all[0..($split - 1)]
+    $my  = Get-CredBlock $all[$split..($all.Count - 1)]
+    foreach ($k in @('Host', 'Port', 'Service', 'User', 'Password')) {
+        if (-not $ora.ContainsKey($k)) { throw "Falta $k en el bloque Oracle de $credFile" }
+    }
+    foreach ($k in @('Host', 'Port', 'Database', 'User', 'Password')) {
+        if (-not $my.ContainsKey($k)) { throw "Falta $k en el bloque Mysql de $credFile" }
+    }
     $overlay = @{
-        DB_ORA_DW_HOST     = $dwHost
-        DB_ORA_DW_PORT     = $dwPort
-        DB_ORA_DW_DATABASE = $dwService
-        DB_ORA_DW_USERNAME = $wanted['User']
-        DB_ORA_DW_PASSWORD = $wanted['Password']
-        DB_ORA_DW_URL      = "jdbc:oracle:thin:@//${dwHost}:${dwPort}/${dwService}"
+        DB_ORA_DW_HOST        = $ora['Host']
+        DB_ORA_DW_PORT        = $ora['Port']
+        DB_ORA_DW_DATABASE    = $ora['Service']
+        DB_ORA_DW_USERNAME    = $ora['User']
+        DB_ORA_DW_PASSWORD    = $ora['Password']
+        DB_ORA_DW_URL         = "jdbc:oracle:thin:@//$($ora['Host']):$($ora['Port'])/$($ora['Service'])"
+        DB_MYSQL_DW_HOST      = $my['Host']
+        DB_MYSQL_DW_PORT      = $my['Port']
+        DB_MYSQL_DW_DATABASE  = $my['Database']
+        DB_MYSQL_DW_USERNAME  = $my['User']
+        DB_MYSQL_DW_PASSWORD  = $my['Password']
     }
     foreach ($v in $vars) {
         if ($overlay.ContainsKey($v.name)) { $v.value = $overlay[$v.name] }
     }
-    Write-Host "DW overlay: ${dwHost}:${dwPort}/$dwService user=$($wanted['User'])"
+    Write-Host "DW Oracle: $($ora['Host']):$($ora['Port'])/$($ora['Service']) user=$($ora['User'])"
+    Write-Host "DW MySQL: $($my['Host']):$($my['Port'])/$($my['Database']) user=$($my['User'])"
 } else {
-    Write-Warning "No existe $credFile; DB_ORA_DW_* quedan con los placeholders de la plantilla."
+    Write-Warning "No existe $credFile; DB_ORA_DW_* y DB_MYSQL_DW_* quedan con los placeholders de la plantilla."
 }
 
 # --- No pisar valores reales ya presentes si la plantilla trae placeholders --
