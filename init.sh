@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# Harness — Sheets medidas → H2 STG_* → MySQL DW_MED_* y DW_MED_OD_*.
+# Bitácora del día: logs/init_YYYYMMDD.log (no se borra).
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+mkdir -p "$ROOT/logs"
+DAILY="$ROOT/logs/init_$(date +%Y%m%d).log"
+RUNLOG="$(mktemp)"
+
+cleanup() {
+  if [[ -f "${RUNLOG:-}" ]]; then
+    cat "$RUNLOG" >> "$DAILY"
+    rm -f "$RUNLOG"
+  fi
+}
+trap cleanup EXIT
+
+log() { printf '%s\n' "$*" | tee -a "$RUNLOG"; }
+fail() { echo -e "${RED}FAIL:${NC} $*" | tee -a "$RUNLOG" >&2; exit 1; }
+warn() { echo -e "${YELLOW}AVISO:${NC} $*" | tee -a "$RUNLOG"; }
+step() { echo -e "${GREEN}==>${NC} $*" | tee -a "$RUNLOG"; }
+
+run() {
+  set +e
+  "$@" 2>&1 | tee -a "$RUNLOG"
+  local rc=${PIPESTATUS[0]}
+  set -e
+  return "$rc"
+}
+
+log "=== inicio $(date -Iseconds) env=local ==="
+
+PY=python3
+[ -x .venv/bin/python ] && PY=.venv/bin/python
+
+step "Prerrequisitos"
+command -v java >/dev/null 2>&1 || fail "java no está en PATH"
+[ -f h2/lib/h2-2.4.240.jar ] || fail "jar H2 no encontrado"
+if [ ! -x .venv/bin/python ]; then
+  fail "venv ausente o roto. Desde el repo padre: ./scripts/nuevo_etl.sh lo crea. A mano: python3 -m venv .venv && .venv/bin/python -m pip install -r python/requirements.txt"
+fi
+"$PY" -c "import yaml, pandas, jaydebeapi, pymysql, gspread" >/dev/null 2>&1 \
+  || fail "el .venv no tiene dependencias (¿venv sin pip?). .venv/bin/python -m pip install -r python/requirements.txt"
+step "switch-env local"
+run ./switch-env.sh local || fail "switch-env local"
+DBNAME="$("$PY" -c "import json; from pathlib import Path; d=json.loads(Path('project-config.json').read_text()); print(next(i['value'] for i in d['config']['variables'] if i['name']=='DB_MYSQL_DW_DATABASE'))")"
+log "base destino MySQL: ${DBNAME}"
+if [ ! -f client_secret.json ]; then
+  fail "falta client_secret.json"
+fi
+
+step "Reset H2 + DDL"
+run ./h2/scripts/reset_and_create.sh || fail "reset H2"
+
+step "Python create STG"
+run "$PY" python/create_stg.py || fail "python/create_stg.py terminó con error"
+
+step "Cargar Sheets suscripcion"
+run "$PY" python/cargar_sheets.py suscripcion || fail "cargar_sheets.py suscripcion"
+
+step "Cargar Sheets seguimiento"
+run "$PY" python/cargar_sheets.py seguimiento || fail "cargar_sheets.py seguimiento"
+
+step "Cargar Sheets od"
+run "$PY" python/cargar_sheets.py od || fail "cargar_sheets.py od"
+
+step "Python main"
+run "$PY" python/main.py || fail "python/main.py terminó con error"
+
+grep -q "Salida RESULTADO" "$RUNLOG" || fail "no hay Salida RESULTADO en el log"
+grep -q "Excel:" "$RUNLOG" || warn "no se escribió Excel (opcional si falla openpyxl)"
+if grep -q '\${[A-Za-z0-9_]\+}' "$RUNLOG"; then
+  fail "log contiene variables Hop sin resolver"
+fi
+
+step "Verificar conteos en H2 y MySQL"
+run "$PY" python/verificar.py || fail "conteos STG y MySQL no coinciden"
+
+echo "" | tee -a "$RUNLOG"
+echo -e "${GREEN}HARNESS OK${NC} — conteos leídos de H2 y MySQL. Bitácora: $DAILY" | tee -a "$RUNLOG"
+exit 0

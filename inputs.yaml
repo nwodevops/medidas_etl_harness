@@ -1,0 +1,155 @@
+# Generado desde input/fuentes_medidas.json.
+# create_stg introspecta el spreadsheet_key de cada fuente (sede patrón).
+# cargar_sheets.py <familia> apila el resto y compara la fila de códigos.
+# sede_columns agrega SEDE_CODIGO y SEDE_NOMBRE al DDL.
+
+sources:
+  - stg_table: STG_MED_SUSC_INFO_GENERAL
+    type: sheets
+    familia: suscripcion
+    spreadsheet_key: "1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs"
+    worksheet: "Información general"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SUSC_PROCESO_PREVIO
+    type: sheets
+    familia: suscripcion
+    spreadsheet_key: "1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs"
+    worksheet: "Proceso Previo"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SUSC_ETAPAS_MA
+    type: sheets
+    familia: suscripcion
+    spreadsheet_key: "1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs"
+    worksheet: "Etapas de MA"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SUSC_MA_GABINETE
+    type: sheets
+    familia: suscripcion
+    spreadsheet_key: "1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs"
+    worksheet: "MA gabinete"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SUSC_MA_CAMPO
+    type: sheets
+    familia: suscripcion
+    spreadsheet_key: "1YpvIXW0Nxr1gVJMH_Nk8a02oebjmYXGqDJDEzj6Iegs"
+    worksheet: "MA campo"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SEG_LISTA_MA
+    type: sheets
+    familia: seguimiento
+    spreadsheet_key: "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"
+    worksheet: "1) Lista MA"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SEG_UBICACION
+    type: sheets
+    familia: seguimiento
+    spreadsheet_key: "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"
+    worksheet: "2) Ubicación"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SEG_INFO_ADICIONAL
+    type: sheets
+    familia: seguimiento
+    spreadsheet_key: "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"
+    worksheet: "3) Info adicional"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SEG_MEDIDAS
+    type: sheets
+    familia: seguimiento
+    spreadsheet_key: "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"
+    worksheet: "4) Medidas Administrativas"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SEG_ACREDITACION
+    type: sheets
+    familia: seguimiento
+    spreadsheet_key: "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"
+    worksheet: "5) Acreditación"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_SEG_MODIFICATORIAS
+    type: sheets
+    familia: seguimiento
+    spreadsheet_key: "1Mnzu7RYw0GdqHPxrsR7uVom00v2YQs8lFSfXyt51Npc"
+    worksheet: "6) Modificatorias"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_OD_LISTA_MA
+    type: sheets
+    familia: od
+    spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
+    worksheet: "1) Lista MA"
+    header_row: 3
+    data_start_row: 4
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_OD_UBICACION
+    type: sheets
+    familia: od
+    spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
+    worksheet: "2) Involuacrados - Ubicación"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_OD_ACREDITACION
+    type: sheets
+    familia: od
+    spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
+    worksheet: "3) Acreditación"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
+
+  - stg_table: STG_MED_OD_MODIFICATORIAS
+    type: sheets
+    familia: od
+    spreadsheet_key: "1-UrRoe4BoOhuWj2vHrds3SX0DSdyKojliS6pkln-WYg"
+    worksheet: "4)Modificatorias"
+    header_row: 2
+    data_start_row: 3
+    sede_columns: true
+    types: varchar
